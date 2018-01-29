@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.entity.ContentType;
@@ -50,92 +51,52 @@ public class ElkLogger {
         }
     }
 
+    
+
+    
     /**
      * *
-     * info Registra mensaje en ElasticSearch
-     *
-     * @param location
-     * @param data
-     * @param id
-     */
-    public void info(String location, Map<String, String> data, Long id) {
-
-        try (RestClient client = connect()) {
-            String jsonData = convertMapToJson(data);
-            System.out.println("JsonData:" + jsonData);
-            HttpEntity entity = new NStringEntity(jsonData, ContentType.APPLICATION_JSON);
-            BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-            try {
-                String inputLine;
-                while ((inputLine = br.readLine()) != null) {
-                    System.out.println(inputLine);
-                }
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Response response = client.performRequest("POST", String.format("/%s/%s", location, id), data, entity);
-
-//                Response response = client.performRequest("POST",
-//                        location + "/?pretty"
-//                        + (id != null ? "/" + id.intValue() : " "),
-//                        data, entity);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-
-        }
-
-    }
-
-    /**
-     * *
-     * info Registra mensaje en ElasticSearch
+     * info Registra mensaje en ElasticSearch 
      *
      * @param location
      * @param jsonData
      * @param id
      */
-    public void info(String location, String jsonData, Long id) {
-        RestClient client = connect();
-        if (client != null) {
-
-            HttpEntity entity = new NStringEntity(jsonData, ContentType.APPLICATION_JSON);
-            Map<String, String> data = revertJsonToMap(jsonData);
-            try {
-                /**
-                 * Verifica si tiene indice lo asigna sino, se autoindexa
-                 */
-                Response response = client.performRequest("POST",
-                        location
-                        + (id != null ? "/" + id : ""),
-                        data, entity);
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+    public void info(String index, String type, String id, Map<String, String> params) throws IOException {
+        try (RestClient client = connect()) {
+           String json = convertMapToJson(params);
+           Map<String, String> params2 = Collections.emptyMap();
+            System.out.println("JsonRequest:" + json);
+            HttpEntity entity = new NStringEntity(json, ContentType.APPLICATION_JSON);
+            Response response = client.performRequest("POST",
+                    (id != null)
+                            ? String.format("/%s/%s/%s", index, type, id)
+                            : String.format("/%s/%s", index, type),
+                    params2, entity);
+            System.out.println("Respuesta: " + response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            
         }
 
     }
 
-    public void indexDocument(String index, String type, String id, String json) throws IOException {
-        try( RestClient client = connect())
-        {
-            
-        
-        Map<String, String> params = Collections.emptyMap();
-        HttpEntity entity = new NStringEntity(json, ContentType.APPLICATION_JSON);
-        Response response = connect().performRequest("POST", 
-                (id != null) ?
-                String.format("/%s/%s/%s", index, type, id) :
-                String.format("/%s/%s", index, type), 
-                params, entity);
-            System.out.println("Respuesta: "+ response);
-        }
-        catch(Exception ex)
-        {
+    public void info(String index, String  type, String id, String json) throws IOException {
+        try (RestClient client = connect()) {
+
+            Map<String, String> params = Collections.emptyMap();
+            System.out.println("JsonRequest:" + json);
+            HttpEntity entity = new NStringEntity(json, ContentType.APPLICATION_JSON);
+            Response response = client.performRequest("POST",
+                    (id != null)
+                            ? String.format("/%s/%s/%s", index, type, id)
+                            : String.format("/%s/%s", index, type),
+                    params, entity);
+            System.out.println("Respuesta: " + response);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
     }
 
     //--------------------------------------------------------
@@ -191,24 +152,24 @@ public class ElkLogger {
 //                + "    \"post_date\" : \"2009-11-15T14:12:12\","
 //                + "    \"message\" : \"trying out Elasticsearch\""
 //                + "}";
-//        Map<String, String> mapa = new HashMap();
-//        mapa.put("user", "cbm");
-//        mapa.put("post_date", String.valueOf(new Date().getTime()));
-//        mapa.put("message", "testing");
-//        String location = "twitter/tweet/";
+        Map<String, String> mapa = new TreeMap();
+        mapa.put("user", "cbm");
+        mapa.put("postDate", "2013-01-30");
+        mapa.put("message", "testing from mapa "+ String.valueOf(new Date().getTime()));
+        String location = "twitter";
 //        new ElkLogger().info(location, mapa, 2l);
-//        
         
         String json = "{" + "\"user\":\"kimchy\"," + "\"postDate\":\"2013-01-30\","
-				+ "\"message\":\"trying out Elasticsearch from JAVA\"" + "}";
-		try {
-			 new ElkLogger().indexDocument("twitter", "tweet", null, json);
-//			example.getRestClient().close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+                + "\"message\":\"trying out Elasticsearch from JAVA\"" + "}";
+        try {
+//            new ElkLogger().info("twitter", "tweet", String.valueOf(new Date().getTime()), mapa);
+            new ElkLogger().info("twitter", "tweet", null, mapa);
+//            new ElkLogger().info("twitter", "tweet", null, json);
 
-        
+//			example.getRestClient().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

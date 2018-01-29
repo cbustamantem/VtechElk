@@ -44,6 +44,12 @@
             <artifactId>elasticsearch-rest-client</artifactId>
             <version>6.1.2</version>
         </dependency>
+        <!-- it help to get slf4j and log4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.7</version>
+        </dependency>
     </dependencies>
 
     <build>
