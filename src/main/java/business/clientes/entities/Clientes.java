@@ -5,6 +5,7 @@
  */
 package business.clientes.entities;
 
+import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -180,6 +181,14 @@ public class Clientes implements Serializable {
 
     public void setEstadoContractual(Boolean estadoContractual) {
         this.estadoContractual = estadoContractual;
+    }
+    
+    public String toJson() {
+        Gson gson = new Gson();
+        return  gson.toJson(this, Clientes.class);
+        // 1. Java object to JSON, and save into a file
+
+// 2. Java object to JSON, and assign to a String
     }
 
    
