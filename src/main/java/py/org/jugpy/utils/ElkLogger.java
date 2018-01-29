@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.org.jugpy.vtechelk;
+package py.org.jugpy.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import org.apache.http.HttpEntity;
@@ -24,14 +21,15 @@ import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 
-/*
+
+/***
+ * ElasticSearch Logger 
  * @author cbustamante
  */
 public class ElkLogger {
 
     /**
-     * connect Establece la conexión con ElasticSearch
-     *
+     * @Description: connect Establece la conexión con ElasticSearch
      * @return
      */
     public RestClient connect() {
@@ -51,18 +49,15 @@ public class ElkLogger {
         }
     }
 
-    
-
-    
-    /**
-     * *
-     * info Registra mensaje en ElasticSearch 
-     *
-     * @param location
-     * @param jsonData
+    /***
+     *  Registra mensaje en ElasticSearch
+     * @param index
+     * @param type
      * @param id
+     * @param params
+     * @throws IOException 
      */
-    public void info(String index, String type, String id, Map<String, String> params) throws IOException {
+    public boolean info(String index, String type, String id, Map<String, String> params) throws IOException {
         try (RestClient client = connect()) {
            String json = convertMapToJson(params);
            Map<String, String> params2 = Collections.emptyMap();
@@ -74,14 +69,24 @@ public class ElkLogger {
                             : String.format("/%s/%s", index, type),
                     params2, entity);
             System.out.println("Respuesta: " + response);
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
+            return false;
             
         }
 
     }
 
-    public void info(String index, String  type, String id, String json) throws IOException {
+    /***
+     * Registra mensaje en ElasticSearch 
+     * @param index
+     * @param type
+     * @param id
+     * @param json
+     * @throws IOException 
+     */
+    public boolean info(String index, String  type, String id, String json) throws IOException {
         try (RestClient client = connect()) {
 
             Map<String, String> params = Collections.emptyMap();
@@ -93,8 +98,10 @@ public class ElkLogger {
                             : String.format("/%s/%s", index, type),
                     params, entity);
             System.out.println("Respuesta: " + response);
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
+            return false;
         }
 
     }
@@ -142,35 +149,6 @@ public class ElkLogger {
      */
     public static void printJson(String json) {
         System.out.println("json = " + json);
-    }
-
-    public static void main(String[] args) {
-//        new ElkLogger().init();
-
-//        String message = "{"
-//                + "    \"user\" : \"kimchy\","
-//                + "    \"post_date\" : \"2009-11-15T14:12:12\","
-//                + "    \"message\" : \"trying out Elasticsearch\""
-//                + "}";
-        Map<String, String> mapa = new TreeMap();
-        mapa.put("user", "cbm");
-        mapa.put("postDate", "2013-01-30");
-        mapa.put("message", "testing from mapa "+ String.valueOf(new Date().getTime()));
-        String location = "twitter";
-//        new ElkLogger().info(location, mapa, 2l);
-        
-        String json = "{" + "\"user\":\"kimchy\"," + "\"postDate\":\"2013-01-30\","
-                + "\"message\":\"trying out Elasticsearch from JAVA\"" + "}";
-        try {
-//            new ElkLogger().info("twitter", "tweet", String.valueOf(new Date().getTime()), mapa);
-            new ElkLogger().info("twitter", "tweet", null, mapa);
-//            new ElkLogger().info("twitter", "tweet", null, json);
-
-//			example.getRestClient().close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
 }
