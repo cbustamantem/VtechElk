@@ -1,8 +1,10 @@
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/entities/Categorias.java
-/home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/controller/ClientesRs.java
-/home/cbustamante/repositorio/VtechElk/src/main/java/controller/ClientesRS.java
+/home/cbustamante/repositorio/VtechElk/src/main/java/business/resources/config/ApplicationConfig.java
+/home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/resources/ClientesRs.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/boundary/ClientesManager.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/dao/GenericImpl.java
+/home/cbustamante/repositorio/VtechElk/src/main/java/py/org/jugpy/utils/UtilLogger.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/py/org/jugpy/vtechelk/ElkLogger.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/entities/Clientes.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/dao/GenericDao.java
+/home/cbustamante/repositorio/VtechElk/src/main/java/business/resources/config/SwaggerJaxrsConfig.java
