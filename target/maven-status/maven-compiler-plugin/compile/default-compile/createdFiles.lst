@@ -6,10 +6,9 @@ business/utils/LogType$LoggerType.class
 business/utils/ElkLogger$1.class
 business/resources/config/ApplicationConfig.class
 business/dao/GenericDao.class
-business/utils/LogType.class
-business/utils/UtilLogger.class
-business/utils/LoggerFactory.class
 business/clientes/resources/ClientesRs.class
 business/dao/GenericImpl.class
+py/org/jugpy/utils/UtilLogger.class
 business/clientes/entities/Clientes.class
 business/resources/config/SwaggerJaxrsConfig.class
+business/clientes/entities/Clientes.class
