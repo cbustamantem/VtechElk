@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 
 /*
@@ -28,8 +28,7 @@ import org.apache.log4j.Logger;
  */
 public class GenericImpl<ET, PK extends Serializable>
         implements GenericDao<ET, PK> {
-    @Inject  
-    private transient Logger logger; 
+    
     
     @PersistenceContext
     public EntityManager em;
@@ -40,7 +39,6 @@ public class GenericImpl<ET, PK extends Serializable>
             em.persist(entity);
             return entity;
         } catch (Exception ex) {
-            logger.error(getEntityName() + ".add", ex);
             return null;
         }
     }
@@ -51,7 +49,6 @@ public class GenericImpl<ET, PK extends Serializable>
             em.merge(entity);
             return entity;
         } catch (Exception ex) {
-            logger.error(getEntityName() + ".update", ex);
             return null;
         }
     }
@@ -62,7 +59,6 @@ public class GenericImpl<ET, PK extends Serializable>
             Query query = em.createNamedQuery(this.getClass().getName() + ".findById").setParameter("id", key);
             return ((ET) query.getSingleResult());
         } catch (Exception e) {
-            logger.error(getEntityName() + ".getById", e);
             return null;
         }
     }
@@ -70,10 +66,8 @@ public class GenericImpl<ET, PK extends Serializable>
     @Override
     public List<ET> getAll() {
         try {
-            logger.info("GetAll >" + getEntityName() + ".findAll");
             return (List<ET>) em.createNamedQuery(getEntityName() + ".findAll").getResultList();
         } catch (Exception ex) {
-            logger.error(getEntityName() + ".getAll", ex);
             return null;
         }
     }
@@ -83,7 +77,6 @@ public class GenericImpl<ET, PK extends Serializable>
         try {
             em.remove(entity);
         } catch (Exception e) {
-            logger.error(this.getClass().getName() + ".update", e);
         }
     }
 

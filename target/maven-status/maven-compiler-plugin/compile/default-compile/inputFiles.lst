@@ -1,12 +1,12 @@
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/entities/Categorias.java
-/home/cbustamante/repositorio/VtechElk/src/main/java/business/resources/config/ApplicationConfig.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/utils/LogType.java
-/home/cbustamante/repositorio/VtechElk/src/main/java/business/utils/LoggerFactory.java
+/home/cbustamante/repositorio/VtechElk/src/main/java/business/utils/LoggerProducer.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/resources/ClientesRs.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/utils/UtilLogger.java
+/home/cbustamante/repositorio/VtechElk/src/main/java/business/controller/config/ApplicationConfig.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/boundary/ClientesManager.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/dao/GenericImpl.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/utils/ElkLogger.java
+/home/cbustamante/repositorio/VtechElk/src/main/java/py/org/jugpy/utils/ElkLogger.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/clientes/entities/Clientes.java
 /home/cbustamante/repositorio/VtechElk/src/main/java/business/dao/GenericDao.java
-/home/cbustamante/repositorio/VtechElk/src/main/java/business/resources/config/SwaggerJaxrsConfig.java

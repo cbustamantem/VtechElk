@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.enterprise.context.ApplicationScoped;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.entity.ContentType;
@@ -27,6 +28,7 @@ import org.elasticsearch.client.RestClientBuilder;
 /*
  * @author cbustamante
  */
+@ApplicationScoped
 public class ElkLogger {
 
     /**
@@ -34,7 +36,7 @@ public class ElkLogger {
      *
      * @return
      */
-    public RestClient connect() {
+    private RestClient connect() {
         try {
 
             RestClientBuilder builder = RestClient.builder(new HttpHost("localhost", 9200, "http"));
