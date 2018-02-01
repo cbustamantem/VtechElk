@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
-import py.org.jugpy.utils.UtilLogger;
+import business.utils.UtilLogger;
 
 /**
  *
