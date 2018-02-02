@@ -5,13 +5,13 @@ business/clientes/boundary/ClientesManager.class
 business/utils/LogType$LoggerType.class
 business/utils/ElkLogger$1.class
 py/org/jugpy/utils/ElkLogger$1.class
-py/org/jugpy/utils/ElkLogger.class
 py/org/jugpy/utils/ElkLogger$2.class
+py/org/jugpy/utils/ElkLogger.class
 business/dao/GenericDao.class
 business/utils/LoggerProducer.class
 business/utils/LogType.class
 business/utils/UtilLogger.class
 business/clientes/resources/ClientesRs.class
-business/controller/config/ApplicationConfig.class
 business/dao/GenericImpl.class
+business/controller/config/ApplicationConfig.class
 business/clientes/entities/Clientes.class

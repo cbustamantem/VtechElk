@@ -27,10 +27,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import javax.ws.rs.Consumes;
 import org.slf4j.Logger;
@@ -116,13 +119,18 @@ public class ClientesRs implements Serializable {
      */
     private Map<String, String> elkResponse(Integer status, String jsonData) {
         Map<String, String> mapaDatos = new HashMap();
-        mapaDatos.put("post_response", String.valueOf(new Date().getTime())); //Fecha y hora del request
+        //2009-11-15T14:12:12
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-ddThh:MM:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        mapaDatos.put("postDate", String.valueOf(sdf.format(new Date()))); //Fecha y hora del request
         mapaDatos.put("status", status.toString()); //Fecha y hora del request
         mapaDatos.put("cliente", jsonData); //Fecha y hora del request
 
         return mapaDatos;
 
     }
+   
 
     private void logElk(Integer status, String jsonData) {
 

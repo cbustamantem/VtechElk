@@ -45,7 +45,7 @@ public class ElkLoggerTest {
     /**
      * Test of info method, of class ElkLogger.
      */
-    @Test
+//    @Test
     public void testingMapInput() throws Exception {
 
         Map<String, String> mapa = new TreeMap();
@@ -57,7 +57,6 @@ public class ElkLoggerTest {
         // TODO review the generated test code and remove the default call to fail.
     }
     
-    @Test
     public void testingJsonInput() throws Exception{
          String json = "{" + "\"user\":\"kimchy\"," + "\"postDate\":\"2013-01-30\","
                 + "\"message\":\"trying out Elasticsearch from JAVA\"" + "}";
