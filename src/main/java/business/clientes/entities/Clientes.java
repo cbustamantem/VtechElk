@@ -188,7 +188,6 @@ public class Clientes implements Serializable {
         return  gson.toJson(this, Clientes.class);
         // 1. Java object to JSON, and save into a file
 
-// 2. Java object to JSON, and assign to a String
     }
 
    

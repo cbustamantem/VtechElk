@@ -5,6 +5,7 @@
  */
 package business.dao;
 
+import business.utils.UtilLogger;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -39,6 +40,7 @@ public class GenericImpl<ET, PK extends Serializable>
             em.persist(entity);
             return entity;
         } catch (Exception ex) {
+            UtilLogger.error("add",ex);
             return null;
         }
     }
@@ -49,6 +51,7 @@ public class GenericImpl<ET, PK extends Serializable>
             em.merge(entity);
             return entity;
         } catch (Exception ex) {
+            UtilLogger.error("update",ex);
             return null;
         }
     }
@@ -59,6 +62,7 @@ public class GenericImpl<ET, PK extends Serializable>
             Query query = em.createNamedQuery(this.getClass().getName() + ".findById").setParameter("id", key);
             return ((ET) query.getSingleResult());
         } catch (Exception e) {
+            UtilLogger.error("getById",e);
             return null;
         }
     }
@@ -68,6 +72,7 @@ public class GenericImpl<ET, PK extends Serializable>
         try {
             return (List<ET>) em.createNamedQuery(getEntityName() + ".findAll").getResultList();
         } catch (Exception ex) {
+            UtilLogger.error("getAll",ex);
             return null;
         }
     }
@@ -77,6 +82,7 @@ public class GenericImpl<ET, PK extends Serializable>
         try {
             em.remove(entity);
         } catch (Exception e) {
+            UtilLogger.error("delete",e);
         }
     }
 

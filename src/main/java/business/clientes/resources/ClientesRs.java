@@ -6,6 +6,7 @@
 package business.clientes.resources;
 
 import business.clientes.boundary.ClientesManager;
+import business.clientes.entities.ClienteElk;
 import business.clientes.entities.Clientes;
 import business.utils.ElkLogger;
 import com.google.gson.Gson;
@@ -27,16 +28,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.logging.Level;
 import javax.ws.rs.Consumes;
-import org.slf4j.Logger;
 
 /**
  *
@@ -78,7 +75,8 @@ public class ClientesRs implements Serializable {
                         .build();
                 Clientes cliente = new Clientes();
                 cliente.setRazonSocial(nombre);
-                logElk(404, cliente.toJson());
+//                logElk(404, cliente.toJson); //con mapa de datos
+                logElk(404, cliente); //con formato json
                 return Response.status(404).entity(value).build();
 
             } else {
@@ -92,7 +90,7 @@ public class ClientesRs implements Serializable {
                     cliente = cl;
                 }
 
-                logElk(200, cliente.toJson());
+                logElk(200, cliente);
                 return Response.status(200).entity(cliente.toJson()).build();
 
             }
@@ -103,7 +101,7 @@ public class ClientesRs implements Serializable {
                     .build();
             Clientes cliente = new Clientes();
             cliente.setRazonSocial(nombre);
-            logElk(500, cliente.toJson());
+            logElk(500, cliente);
             return Response.status(500).entity(value).build();
         }
 
@@ -132,12 +130,30 @@ public class ClientesRs implements Serializable {
     }
    
 
+    /***
+     * Registro de datos en elasticSearch con mapas de datos
+     * @param status
+     * @param jsonData 
+     */
     private void logElk(Integer status, String jsonData) {
 
         try {
             elkLogger.info("api", "clientes", null, elkResponse(status, jsonData));
         } catch (IOException ex) {
-//          logger.info("Error en la operacion  logElk");
+          UtilLogger.info("Error en la operacion  logElk");
+        }
+    }
+    /***
+     * Registro de datos en elasticSearch con formato Json
+     * @param status
+     * @param cliente 
+     */
+    private void logElk(Integer status, Clientes cliente) {
+
+        try {
+            elkLogger.info("api", "clientes", null, new ClienteElk(status,cliente).toJson() );
+        } catch (IOException ex) {
+          UtilLogger.info("Error en la operacion  logElk");
         }
     }
 
